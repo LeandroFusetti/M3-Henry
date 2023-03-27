@@ -2,7 +2,7 @@
 
 ## **🕒 Duración estimada**
 
-x minutos
+90 minutos
 
 ---
 

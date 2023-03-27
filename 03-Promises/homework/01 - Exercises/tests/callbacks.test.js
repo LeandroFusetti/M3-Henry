@@ -8,8 +8,7 @@ const {
 
 const {
   problemAx,
-  problemBx,
-  problemCx
+  problemBx
 } = require("../exercise-two");
 
 let fs = require("fs");
@@ -140,48 +139,12 @@ describe("02 | Ejercicios - Callbacks (Poem-two)", () => {
     done();
   });
 
-  it("Problem B | Consologuea todos los stanzas que se encuentren en poem-two versión callback", (done) => {
-    jest.setTimeout(500);
-    const blue = jest.spyOn(utils, "blue");
-    const readFileSpy = jest.spyOn(utils, "readFile");
-    problemBx();
-    if (readFileSpy.mock.calls.length === 0)
-      return done(new Error("problemB | No se llamo a readFile"));
-    const readFileCallback = readFileSpy.mock.calls[0][1];
-    const readFileCallbackTwo = readFileSpy.mock.calls[1][1];
-    const readFileCallbackThree = readFileSpy.mock.calls[2][1];
-    const readFileCallbackFour = readFileSpy.mock.calls[3][1];
-    const readFileCallbackFive = readFileSpy.mock.calls[4][1];
-    const readFileCallbackSix = readFileSpy.mock.calls[5][1];
-    const readFileCallbackSeven = readFileSpy.mock.calls[6][1];
-    const readFileCallbackEight = readFileSpy.mock.calls[7][1];
-    readFileCallback(null, stanzasTwo[0]);
-    expect(blue).toHaveBeenCalledWith(stanzasTwo[0]);
-    readFileCallbackTwo(null, stanzasTwo[1]);
-    expect(blue).toHaveBeenCalledWith(stanzasTwo[1]);
-    readFileCallbackThree(null, stanzasTwo[2]);
-    expect(blue).toHaveBeenCalledWith(stanzasTwo[2]);
-    readFileCallbackFour(null, stanzasTwo[3]);
-    expect(blue).toHaveBeenCalledWith(stanzasTwo[3]);
-    readFileCallbackFive(null, stanzasTwo[4]);
-    expect(blue).toHaveBeenCalledWith(stanzasTwo[4]);
-    readFileCallbackSix(null, stanzasTwo[5]);
-    expect(blue).toHaveBeenCalledWith(stanzasTwo[5]);
-    readFileCallbackSeven(null, stanzasTwo[6]);
-    expect(blue).toHaveBeenCalledWith(stanzasTwo[6]);
-    readFileCallbackEight(null, stanzasTwo[7]);
-    expect(blue).toHaveBeenCalledWith(stanzasTwo[7]);
-    blue.mockRestore();
-    readFileSpy.mockRestore();
-    done();
-  });
-
-  it("Problem C | Consologuea todos los stanzas que se encuentren en poem-two o un error", (done) => {
+  it("Problem B | Consologuea todos los stanzas que se encuentren en poem-two o un error", (done) => {
     jest.setTimeout(500);
     const blue = jest.spyOn(utils, "blue");
     const magenta = jest.spyOn(utils, "magenta");
     const readFileSpy = jest.spyOn(utils, "readFile");
-    problemCx();
+    problemBx();
     if (readFileSpy.mock.calls.length === 0)
       return done(new Error("problemC | No se llamo a readFile"));
     const readFileCallback = readFileSpy.mock.calls[0][1];

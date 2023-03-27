@@ -20,20 +20,25 @@ En base a lo practicado en la homework Exercises, vamos a crear rutas con sus re
 
 ### **👩‍💻 EJERCICIO 1**
 
-### **Instalar Express y body-parser**
+### **Crear servidor con Express**
 
-1. Debes instalar express con `npm install express`.
+1. Instala la librería **`express`**.
 
-2. Corrobora que se ha instalado abriendo tu archivo package.json dentro de `dependencies`, sección que se ha creado automáticamente cuando instalaste express o también puedes verla dentro de la carpeta node_modules.
+2. Anteriormente habías creado tu servidor con Node puro en el archivo **`server.js`**, ahora lo cambiaremos para utilizar directamente el framework Express. Por lo que debes eliminar todo el contenido de este archivo.
 
-3. Además vas a necesitar instalar body-parser con `npm i body-parser`, esta librería es necesaria para que puedas recibir la información por body.
-
-4. Una vez la tengas instalada copia y pega este snippet de código dentro del archivo app.js:
+3. Dentro del archivo **`server.js`** importa a `express` e incializa un nuevo servidor en el puerto 3001. Esta sería una forma de seguir buenas prácticas:
 
 ```javascript
-app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
-app.use(bodyParser.json({ limit: "50mb" }));
+const express = require('express');
+const server = express();
+const PORT = 3001;
+
+server.lister(PORT, () => {
+   console.log('Server raised in port ' + PORT);
+});
 ```
+
+😎 Acabas de crear tu servidor con Express!!
 
 <br />
 
@@ -41,20 +46,29 @@ app.use(bodyParser.json({ limit: "50mb" }));
 
 ### **👩‍💻 EJERCICIO 2**
 
-### **Crear servidor con Express**
+### **Reconstruyendo los controladores**
 
-1. Anteriormente habías creado tu servidor con node puro en el archivo app.js, ahora lo cambiaremos para utilizar directamente el framework Express.
+En este ejercicio recontruiremos nuestros dos controladores de modo que funcionen con express.
 
-2. Define una constante que llamada `express` y en ella guarda la función `require` que incluya el módulo **express**, de esta forma podemos usar el paquete **Express** que instalamos.
+### **getCharByID**
 
-3. Define una segunda constante llamada `app` en la que guardes la ejecución de express, ello se encarga de manejar las solicitudes y respuestas cliente-servidor.
+Elimina todo lo que tienes en este archivo, y si estos pasos:
 
-```javascript
-const express = require("express");
-const app = express();
-```
+1. Guarda esta url en una constante llamada **`URL`**: "_https://rickandmortyapi.com/api/character/_".
 
-😎 Acabas de crear tu servidor con Express!!
+2. Crea una función **`getChatById`** y expórtala. Recibe por parámetro a **`req`** y **`res`**. Luego crea una constante con el nombre **`params`** e iguálalo a **req.params**.
+
+3. Haz una petición a la API, y recibe el personaje con el ID que obtuviste de params. Sólo necesitas las propiedades: **id**, **name**, **species**, **image** y **gender**.
+
+4. En el caso de que salga todo OK, la ruta debe responder un JSON con la información del personaje.
+
+5. Si hay un error debes responder con un status 500, y un JSON con la propiedad **`message`** de **error**.
+
+</br>
+
+### **getCharDetail**
+
+1. En este caso debes repetir todo lo que hiciste en el controlador anterior, con la diferencia que esta vez debes agregar la propiedad **origin** de tu personaje.
 
 <br />
 
@@ -64,40 +78,43 @@ const app = express();
 
 ### **Crear Rutas**
 
-1. Anteriormente habíamos creado una ruta get que obtiene el personaje de Rick and Morty por **id** mediante un archivo que tenemos llamado `data.js`, bien vamos a modificarlo:
+En la constante **app** ahora tenemos acceso a los métodos HTTP, vamos a necesitar para este ejercicio el método `get` y traer información. Este método recibe dos argumentos: el endpoint (path) y una función callback. Esta función callback recibe dos parámetros: **`req`** y **`res`**.
 
-a. En app tenemos los métodos HTTP listos para utilizar, por ende si nesitamos conseguir la data, necesitamos el método get, este método recibe dos parámetros: el objeto `request` de ahora en más **req** y el objeto `response` de ahora en más **res**.
+Dirígete a la carpeta **routes** y crea un archivo llamado **`index.js`**. En este archivo deberás:
 
-b. Ahora, en vez de consumir los datos de **data.js**, lo vamos a hacer de la API de Rick & Morty con la url `https://rickandmortyapi.com/api/character`
+1. importar mediante destructuring la función **`Router`** de **express**.
 
-c. Crea la ruta **get/`rickandmorty`/character/{id}** y obtén solo los datos de la API https://rickandmortyapi.com/api/character/{detailId} que precisamos para el componente Card.jsx en el front, estos datos son:
+2. importa los dos controlladores que hemos creado en la homewrok anterior: **`getCharById`** y **`getCharDetail`**.
 
-- id
-- name
-- species
-- gender
-- image
+3. Debajo de esto crea una constante con el nombre **`router`** e iguálalo de la siguiente manear con la función **`Router`** ejecutada:
 
-2. Crea una segunda ruta **get/`rickandmorty`/detail/{detailId}**, obtén los datos de la API https://rickandmortyapi.com/api/character/{detailId} y envíalo al componente Detail.jsx:
+```javascript
+const router = Router();
+```
 
-- name
-- status
-- species
-- gender
-- origin
-- image
+4. Ahora crearemos nuestras primeras dos rutas de express. Para esto, a partir de la constante **`router`**, llama al método **get**. Este método debe recibir dos argumentos. El primero será el path de la ruta, que en este caso es "_/onsearch/:id_". El segundo argumento será la función **`getCharById`**.
 
-> Hint: Recuerda que los llamados a la API son asíncronos.
+5. Ahora haremos lo mismo con detail. A partir de **`router`** llama al método **get**. Como primer parámetro le pasaras el path "_/detail/:id_". El segundo argumento será la función **`getCharDetail`**.
 
-3. Define una constante llamada `fav` que sea un arreglo vacío y crea las siguientes rutas:
+6. Por último exporta a la constante **`router`**.
 
-a. **GET/`rickandmorty`/fav**, que obtenga los personajes guardados en el arreglo **fav**.
+7. Importa este **`router`** dentro del archivo **`server`**. Crea un middleware que tenga como parámetro a la variable **`express`** siendo ejecutado por el método **json**. Crea otro middleware que como primer argumento le pases el path "_/_", y como segundo el router.
 
-b. **POST/`rickandmorty`/fav**, que guarde los personajes en el arreglo **fav**.
+<br />
 
-c. **DELETE/`rickandmorty`/fav/${id}**, que elimine el personaje en el arreglo **fav** a partir del **id** que recibe por parámetro.
+---
 
-> Hint: Recuerda modularizar en tu carpeta controllers como lo aprendiste en la homework 03-Promises con los archivos **getCharById.js** y **getCharDetail.js**
+### **👩‍💻 EJERCICIO 3**
+
+## **Ruta Fav**
+
+Dentro de tu carpeta **`util`** simularemos una base de datos, que en este caso será un arreglo. Para esto crea un archivo que se llame **`favs`**. Dentro de él crea y exporta un arreglo vacío.
+
+1. Crea la ruta **POST/`rickandmorty`/fav**, la cual recibe un personaje por **`req.body`**. A este personaje lo deberás pushear dentro de este arreglo.
+
+2. Crea la ruta **GET/`rickandmorty`/fav**, la cual debe obtener todos los personajes guardados en el arreglo **`favs`**.
+
+3. Crea la ruta **DELETE/`rickandmorty`/fav/:id**, que elimine el personaje en el arreglo **fav** a partir del **id** que recibe por parámetro.
 
 <br />
 
@@ -105,30 +122,16 @@ c. **DELETE/`rickandmorty`/fav/${id}**, que elimine el personaje en el arreglo *
 
 ### **👩‍💻 EJERCICIO 4**
 
-### **Iniciar servidor**
-
-1. Crea un archivo llamado **start.js** en el que importes el servidor que se encuentra configurado en el archivo **app.js**, desde este archivo levantaremos el servidor.
-
-2. El al archivo **package.json** debes cambiar el script `start` donde su valor sea `start.js`
-
-3. Es hora de iniciar el servidor, con el método listen de express, coloca a escuchar el servidor en el puerto 3001.
-
-<br />
-
----
-
-### **👩‍💻 EJERCICIO 5**
-
 ### **Conectar rutas con frontend**
 
 Por último, recordemos que en el front habíamos configurado la ruta para que consuma los datos desde nuestro servidor.
 
-Ahora dirígete a la carpeta **front** y haz los siguiente cambios:
+Ahora dirígete a la carpeta **front** y haz los siguientes cambios:
 
-1. En el componente Detail donde llamamos a la API de Rick & Morty, cambia la ruta get que actualmente llama a la ruta **https://rickandmortyapi.com/api/character/** que está en este momento por esta: ` http://localhost:3001/rickandmorty/detail`
+1. En el componente Detail donde llamamos a la API de Rick & Morty en la ruta **https://rickandmortyapi.com/api/character/** cámbiala por la ruta que creamos en el back: **http://localhost:3001/rickandmorty/detail**
 
-2. En la action para agregar favorito, ahora debes enviar los personajes al endpoint **POST/`rickandmorty`/fav**.
+2. En la action para agregar favorito, ahora debes enviar los personajes al endpoint **http://localhost:3001/rickandmorty/fav** con el método `post`.
 
-3. En la action para eliminar favorito, ahora debes enviar el personaje a eliminar al endpoint **DELETE/`rickandmorty`/fav**.
+3. En la action para eliminar favorito, ahora debes enviar el personaje a eliminar al endpoint **http://localhost:3001/rickandmorty/fav** con el método `delete`.
 
 ✨✨Llegamos al final de esta homework creamos nuestro servidor y tres rutas para nuestro front!! 🚀🚀

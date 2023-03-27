@@ -91,7 +91,7 @@ describe('02 | Ejercicios', () => {
     done();
   });
 
-  it('TAIL - Debe imprimir las ultimas lineas del archivo provisto', (done) => {
+  it('TAIL - Debe imprimir la ultima linea del archivo provisto', (done) => {
     commands.tail(index.print, 'testingAux.js');
     const readFileCallback = readFileSpy.mock.calls[0][2];
     readFileCallback(null, `(function (args) {

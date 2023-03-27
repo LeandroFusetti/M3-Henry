@@ -32,25 +32,25 @@ Crearemos una ruta para manejar las funcionalidades:
 
 ### **GET Search**
 
-1. Dirígete a tu carpeta `controllers` y crea un archivo llamado `getCharById.js`. Dentro de este archivo deberás:
+1. **Dirígete a tu carpeta `controllers` y crea un archivo llamado `getCharById.js`. Dentro de este archivo deberás:**
 
-   -  Declarar una variable con el nombre "_getCharById_" y exportarla. Esta variable será una función que recibe dos parámetros: **res** y **id**.
+-  Declarar una variable con el nombre "_getCharById_" y exportarla. Esta variable será una función que recibe dos parámetros: **res** y **ID**.
 
-   -  Dentro de la función deberás hacer una petición (_código asincrónico_) a la URL `https://rickandmortyapi.com/api/character/`. Debes utilizar promesas para realizar esto. Recuerda que debes agregar el ID recibido por parámetro al final de esta URL.
-
-   -  Una vez que tienes la respuesta de la petición, crea un objeto en el que guardarás las propidades **image**, **name**, **gender** y **species** que recibiste como respuesta (todos los datos de la petición se encuentran dentro de una propiedad llamada **data**).
-
-   -  Una vez creado el objeto, deberás devolver una respuesta con status `200`, un Content-Type igual a `application/json`, y finalmente responde el objeto que creaste convertido en JSON:
-
-      ```javascript
-      res.end(JSON.stringify(objeto));
-      ```
-
-   -  En el caso de que la promesa tenga algún fallo es importante que concatenes un `.catch` al final de la promesa para poder manejar el error. Dentro del catch deberás devolver una respuesta con status `500`, un Content-Type igual a `text/plain`, y finalmente responde con la propiedad **message** del error.
+-  Dentro de la función deberás hacer una petición (_código asincrónico_) a la URL `https://rickandmortyapi.com/api/character/:id`. Debes utilizar promesas para realizar esto. Recuerda que debes agregar el ID recibido por parámetro al final de esta URL.
 
 > **[NOTA]:** puedes utilizar axios o fetch. ¡Como más gustes!
 
-2. ¡Listo! Ya tenemos nuestro primer controlador. Ahora lo vamos a utilizar en nuestra ruta. Para esto, dirígete al archivo llamado **`src/routes/server.js`**. **Elimina** todo el contenido de este archivo.
+-  Una vez que tienes la respuesta de la petición, crea un objeto en el que guardarás las propidades **id**, **image**, **name**, **gender** y **species** que recibiste como respuesta (todos los datos de la petición se encuentran dentro de una propiedad llamada **data**).
+
+-  Una vez creado el objeto, deberás devolver una respuesta con status `200`, un Content-Type igual a `application/json`, y finalmente responde el objeto que creaste convertido en JSON:
+
+```javascript
+res.end(JSON.stringify(objeto));
+```
+
+-  En el caso de que la promesa tenga algún fallo es importante que concatenes un `.catch` al final de la promesa para poder manejar el error. Dentro del catch deberás devolver una respuesta con status `500`, un Content-Type igual a `text/plain`, y finalmente responde con la propiedad **message** del error.
+
+2. ¡Listo! Ya tenemos nuestro primer controlador. Ahora lo vamos a utilizar en nuestra ruta. Para esto, dirígete al archivo llamado **`server.js`**. **Elimina** todo el contenido de este archivo, y también elimina el archivo **`data.js`** de la carpeta **utils**.
 
 3. Dentro de este archvio tendrás que:
 
@@ -60,7 +60,9 @@ Crearemos una ruta para manejar las funcionalidades:
 
    -  Dentro del callback del servidor debes:
 
-      -  copiar y pegar la siguiente línea:
+      -  Crea el callback del servidor que recibe a **`req`** y a **`res`**.
+
+      -  copiar y pegar la siguiente línea dentro del callback de este servidor:
 
       ```javascript
       res.setHeader('Access-Control-Allow-Origin', '*');
@@ -68,7 +70,7 @@ Crearemos una ruta para manejar las funcionalidades:
 
       > **[NOTA]**: esta línea permitirá contectar tu FRONT con el SERVIDOR sin que haya problemas de CORS.
 
-      -  crear un condicional que pregunte si la **url** incluye el string "_**onsearch**_". En el caso de que si lo incluya deberás ejecutar el controlador pasándole como argumentos:
+      -  crear un condicional que pregunte si la **url** incluye el string "_**onsearch**_". En el caso de que si lo incluya deberás ejecutar el controlador que creamos en el ejercicio anterior pasándole como argumentos:
 
          -  El parámetro **`res`**.
 
@@ -88,7 +90,7 @@ Ahora crearemos la ruta para obtener el detalle de un personaje.
 
 1. Dirígete a tu carpeta `controllers` y crea un archivo llamado `getCharDetail.js`. Dentro de este archivo deberás:
 
-   -  Declarar una variable con el nombre "_getCharDetail_" y exportarla. Esta variable será una función que recibe dos parámetros: **res** y **id**.
+   -  Declarar una variable con el nombre "_getCharDetail_" y exportarla. Esta variable será una función que recibe dos parámetros: **res** y **ID**.
 
    -  El resto de la lógica de esta función es exactamente igual al ejercicio anterior, con la diferencia que esta vez debes obtener todas estas propiedades del personaje: **image**, **name**, **gender**, **status**, **origin** y **species**.
 
@@ -116,13 +118,13 @@ Una vez levantado, verifica lo siguiente:
 
 ### **ON SEARCH**
 
-Ve del lado del Front-End de tu proyecto, y busca la función **onSearch**. En ella deberás eliminar la URL de la API de Rick&Morty y pegar la nueva URL de tu servidor: **`http://localhost:3000/rickandmorty/onsearch/`**. Si levantas tu proyecto deberías de poder utilizar tu search-bar normalmente.
+Ve del lado del Front-End de tu proyecto, y busca la función **onSearch**. En ella deberás eliminar la URL de la API de Rick&Morty y pegar la nueva URL de tu servidor: **`http://localhost:3001/rickandmorty/onsearch/`**. Si levantas tu proyecto deberías de poder utilizar tu search-bar normalmente.
 
 </br >
 
 ### **DETAIL**
 
-Ahora queda que vallas a tu componente **Detail.jsx** y reemplaces la URL de la API con esta nueva URL de tu servidor: **`http://localhost:3000/rickandmorty/detail/`**. Ahora podrás ingresar al detalle de cualquier personaje sin problemas.
+Ahora queda que vayas a tu componente **Detail.jsx** y reemplaces la URL de la API con esta nueva URL de tu servidor: **`http://localhost:3001/rickandmorty/detail/`**. Ahora podrás ingresar al detalle de cualquier personaje sin problemas.
 
 ---
 

@@ -8,8 +8,7 @@ let args = process.argv.slice(2).map(function (st) {
 
 module.exports = {
   problemAx: problemA,
-  problemBx: problemB,
-  problemCx: problemC
+  problemBx: problemB
 };
 
 // corre cada problema dado como un argumento del command-line para procesar
@@ -35,22 +34,6 @@ function problemB() {
   let filenames = [1, 2, 3, 4, 5, 6, 7, 8].map(function (n) {
     return "poem-two/" + "stanza-0" + n + ".txt";
   });
-
-  // callback version
-  filenames.forEach((filename) => {
-    exerciseUtils.readFile(filename, function (err, stanza) {
-      exerciseUtils.blue(stanza);
-    });
-  });
-
-  // promise version
-  // Tu código acá:
-}
-
-function problemC() {
-  let filenames = [1, 2, 3, 4, 5, 6, 7, 8].map(function (n) {
-    return "poem-two/" + "stanza-0" + n + ".txt";
-  });
   let randIdx = Math.floor(Math.random() * filenames.length);
   filenames[randIdx] = "wrong-file-name-" + (randIdx + 1) + ".txt";
 
@@ -66,7 +49,7 @@ function problemC() {
   // Tu código acá:
 }
 
-function problemD() {
+function problemC() {
   let fs = require("fs");
   function promisifiedWriteFile(filename, str) {
     // tu código acá:

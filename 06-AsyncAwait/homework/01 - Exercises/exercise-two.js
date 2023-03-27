@@ -1,5 +1,6 @@
 "use strict";
 
+const { log } = require("async");
 let exerciseUtils = require("./utils");
 
 let args = process.argv.slice(2).map(function (st) {
@@ -30,6 +31,11 @@ async function problemA() {
 
   // async await version
   // Tu código acá:
+  const stanza= await Promise.all([exerciseUtils.promisifiedReadFile("poem-two/stanza-01.txt"),exerciseUtils.promisifiedReadFile("poem-two/stanza-02.txt")])
+    
+    exerciseUtils.blue(stanza[0])
+    exerciseUtils.blue(stanza[1])
+  
 }
 
 async function problemB() {
@@ -46,6 +52,12 @@ async function problemB() {
 
   // async await version
   // Tu código acá:
+  const promises= filenames.map((filename)=>{return exerciseUtils.promisifiedReadFile(filename)})
+  const stanzas= await Promise.all(promises)
+  stanzas.forEach(stanza =>{return exerciseUtils.blue(stanza)});
+  
+  
+
 }
 
 async function problemC() {
@@ -62,6 +74,11 @@ async function problemC() {
 
   // async await version
   // Tu código acá:
+  const promises= filenames.map((filename)=>{return exerciseUtils.promisifiedReadFile(filename)})
+  promises.forEach(async (promise) => {
+    const stanza= await promise
+    return exerciseUtils.blue(stanza)
+  });
 }
 
 async function problemD() {
@@ -72,13 +89,28 @@ async function problemD() {
   filenames[randIdx] = "wrong-file-name-" + (randIdx + 1) + ".txt";
 
   // callback version
-  filenames.forEach((filename) => {
+ /*  filenames.forEach((filename) => {
     exerciseUtils.readFile(filename, function (err, stanza) {
       exerciseUtils.blue(stanza);
       if (err) exerciseUtils.magenta(new Error(err));
     });
-  });
+  }); */
 
   // async await version
   // Tu código acá:
+
+  const promises= filenames.map((filename)=>{return exerciseUtils.promisifiedReadFile(filename)})
+  try {
+    for(const promise of promises){
+      const stanza= await promise
+      return exerciseUtils.blue(stanza)
+      
+    }
+  
+  } catch (error) {
+    exerciseUtils.magenta(error)
+  }finally{
+    console.log("done");
+  }
+  
 }

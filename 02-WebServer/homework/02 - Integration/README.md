@@ -2,7 +2,7 @@
 
 ## **🕒 Duración estimada**
 
-x minutos
+90 minutos
 
 <br />
 
@@ -36,54 +36,19 @@ En esta homework, vamos a estructurar nuestro proyecto, crear nuestro primer ser
 
 6. Dentro de la carpeta **src** debes crear lo siguiente:
 
-   - Un archivo llamado `app.js`.
-   - Una carpeta llamada `controllers`.
-   - Una carpeta llamada `routes`.
-   - Una carpeta llamada `utils`.
-   - Una carpeta llamada `test`.
+   -  Un archivo llamado `server.js`.
+   -  Una carpeta llamada `controllers`.
+   -  Una carpeta llamada `routes`.
+   -  Una carpeta llamada `utils`.
+   -  Una carpeta llamada `test`.
 
 7. Pasa el archivo `data.js` que se encuentra en la carpeta **02 - Integration** a tu carpeta **back/src/utils**.
-   <br />
+
+</br >
 
 ---
 
 ### **👩‍💻 EJERCICIO 2**
-
-### **Crea tu primer server**
-
-1. Crea un archivo llamado `server.js` dentro de la carpeta **back/src/routes**.
-
-2. Importa **http** desde el módulo `http`.
-
-3. Crea y levanta el servidor en el puerto **3001**.
-
-4. Dentro del callback del servidor debes crear un condicional que pregunte si la **url** incluye el string `rickandmorty/character`. En caso de que si lo incluya, obtén el personaje por id que llega por **req.url** y que coincida con el personaje en el archivo **data.js**.
-
-5. Envía como respuesta un JSON con toda la información del personaje.
-
-   > **[PISTA]:** dentro del parámetro **`req.url`** está el id del personaje. Puedes utilizar el método split() para obtenerlo...
-
-<br />
-
----
-
-### **👩‍💻 EJERCICIO 3**
-
-### **Conectar front - back**
-
-1. Abre tu proyecto en la carpeta **front** para poder hacer un pequeño cambio.
-
-2. Dentro del archivo **app.js** tienes una función llamada `onSearch`. La URL a la que le haces la petición es
-
-En el archivo App.js, donde tienes dentro de la función **onSearch**, cambia la ruta get que actualmente llama **<https://rickandmortyapi.com/api/character/>**. Tienes que reemplazarla por esta nueva URL: `http://localhost:3001/rickandmorty`.
-
-> **[NOTA]:** recuerda agregar a la ruta el id.
-
-<br />
-
----
-
-### **👩‍💻 EJERCICIO 4**
 
 En la carpeta raíz de tu Back-End tendrás que ejecutar el comando:
 
@@ -93,19 +58,61 @@ En la carpeta raíz de tu Back-End tendrás que ejecutar el comando:
 
 De esta manera crearás un archivo `package.json`.
 
-En este sólo deberás instalarle las librerías **axios** y **nodemon** de la siguiente manera:
+En este sólo deberás instalar la librería **nodemon** de la siguiente manera:
 
 ```bash
-    npm install axios nodemon
+    npm install nodemon
 ```
 
 Una vez hecho esto, dentro del objeto **scripts** tienes que dejar el script **`start`** de la siguiente manera:
 
 ```javascript
-    "start": "nodemon ./src/routes/server.js",
+    "start": "nodemon ./src/server.js",
 ```
 
-</br >
+<br />
+
+---
+
+### **👩‍💻 EJERCICIO 3**
+
+### **Crea tu primer server**
+
+1. Dírigete al archivo llamado **`server.js`**.
+
+2. Importa **http** desde el módulo `http`.
+
+3. Crea y levanta el servidor en el puerto **3001**.
+
+4. Dentro del callback del servidor debes:
+
+   -  copiar y pegar la siguiente línea:
+
+      ```JAVASCRIPT
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      ```
+
+   -  crear un condicional que pregunte si la **url** incluye el string `rickandmorty/character`. En caso de que si lo incluya, obtén el personaje por id que llega por **req.url** y que coincida con el personaje en el archivo **data.js** (deberás importar este archivo).
+
+5. Envía como respuesta un JSON con toda la información del personaje.
+
+   > **[PISTA]:** dentro del parámetro **`req.url`** está el id del personaje. Puedes utilizar el método split() para obtenerlo...
+
+<br />
+
+---
+
+### **👩‍💻 EJERCICIO 4**
+
+### **Conectar front - back**
+
+1. Abre tu proyecto en la carpeta **front** para poder hacer un pequeño cambio.
+
+2. Dentro del archivo **app.js** tienes una función llamada `onSearch`. La URL a la que le haces la petición es, **<https://rickandmortyapi.com/api/character/>**. Tienes que reemplazarla por esta nueva URL: `http://localhost:3001/rickandmorty`.
+
+> **[NOTA]:** recuerda agregar a la ruta el id.
+
+<br />
 
 ---
 
